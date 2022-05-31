@@ -9,7 +9,7 @@
         <p class="reamrk-desc">4、本项目的服务端采用Windows Server 2012、宝塔面板结合Nginx。</p>
         <p class="reamrk-desc">5、本项目Gitee下载地址：<a target="_blank" href="https://gitee.com/xiaoxiang_reincarnation/vue3-ts-vite-admin">主应用</a>、<a target="_blank" href="https://gitee.com/xiaoxiang_reincarnation/vue3-ts-vite-admin-micro1">微前端应用1</a>、<a target="_blank" href="https://gitee.com/xiaoxiang_reincarnation/vue3-ts-vite-admin-micro2">微前端应用2</a>、<a target="_blank" href="https://gitee.com/xiaoxiang_reincarnation/vue3-ts-vite-admin-iframe">iframe项目</a></p>
         <p class="reamrk-desc">6、本项目Github下载地址：<a target="_blank" href="https://github.com/dddggg123/vue3-ts-vite-admin">主应用</a>、<a target="_blank" href="https://github.com/dddggg123/vue3-ts-vite-admin-micro1">微前端应用1</a>、<a target="_blank" href="https://github.com/dddggg123/vue3-ts-vite-admin-micro2">微前端应用2</a>、<a target="_blank" href="https://github.com/dddggg123/vue3-ts-vite-admin-iframe">iframe项目</a></p>
-        <p class="reamrk-desc">7、如果你觉得本项目不错或者对自己工作有帮助，欢迎点个star。</p>
+        <p class="reamrk-desc">7、如果你觉得本项目不错或者对自己工作有帮助，欢迎点个star！</p>
      </div>
     </div>
   </div>
