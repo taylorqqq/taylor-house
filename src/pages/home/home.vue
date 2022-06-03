@@ -45,7 +45,7 @@ import emitter from "@/utils/bus"
 export default defineComponent({
   setup() {
     onMounted(() => {
-      emitter.on("loginStatus", res => {
+      emitter.on("loginStatus", (res: any) => {
         if (res === "ok") {
           ElMessage({
             message: '登录成功',
