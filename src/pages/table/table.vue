@@ -73,21 +73,19 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { exportExcel } from "../../utils/export";
-import {useRouter} from "vue-router"
+// import {useRouter} from "vue-router"
 
 export default defineComponent({
   setup() {
-    const router = useRouter();
-    const bookBtnHandler = (type: String) => {
-      console.log("事件类型:" + type);
-      switch (type) {
-        case 'detail':
-          router.push('/book');
-          break;
-        case 'detail':
-          
-          break;
-      }
+    // const router = useRouter();
+    const bookBtnHandler = (_type: String) => {
+      // switch (type) {
+      //   case 'detail':
+      //     router.push('/book');
+      //     break;
+      //   case 'modify':
+      //     break;
+      // }
     };
     const bookList = [
       {

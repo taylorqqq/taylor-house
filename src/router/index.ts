@@ -52,8 +52,8 @@ router.afterEach((to: any, from: any, _next: any) => {
   } catch (err) { }
   const arr = to.matched;
   let routerList = [...arr];
-  console.log(from);
-  console.log(to);
+  // console.log(from);
+  // console.log(to);
   routerList = routerList.splice(1);
   if (to.meta.hide) {
     routerList.unshift(from);

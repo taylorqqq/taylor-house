@@ -69,7 +69,7 @@
         </el-tab-pane>
       </el-tabs>
       <div class="footer-section">
-        <span class="version">{{ $t("版本号") }}：1.0.22060701</span>
+        <span class="version">{{ $t("版本号") }}：1.0.22060801</span>
       </div>
     </div>
     <div class="record-section">
@@ -143,8 +143,8 @@ export default defineComponent({
       });
     };
 
-    const account: Ref<String> = ref("");
-    const password: Ref<String> = ref("");
+    const account = ref("");
+    const password = ref("");
 
     onMounted(() => {
       let type = route.params.type as any;
