@@ -163,15 +163,15 @@ export const DynamicRoutes = [
           icon: "map-location",
         },
       },
-    //   {
-    //     path: "editor",
-    //     name: "editor",
-    //     component: () => import("@/pages/editor/editor.vue"),
-    //     meta: {
-    //       name: "富文本编辑器",
-    //       icon: "reading",
-    //     },
-    //   },
+      {
+        path: "editor",
+        name: "editor",
+        component: () => import("@/pages/editor/editor.vue"),
+        meta: {
+          name: "富文本编辑器",
+          icon: "reading",
+        },
+      },
       {
         path: "iframe",
         name: "iframe",
