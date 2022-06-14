@@ -10,7 +10,7 @@
 ### 项目预览
 
 - 在线预览地址1：https://www.xkxk.tech
-- 在线预览地址2：https://www.xkxk.tech
+- 在线预览地址2：https://xkxk.tech
 
 ### 相关技术栈
 
