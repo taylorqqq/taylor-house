@@ -71,7 +71,7 @@
                 </el-tab-pane>
             </el-tabs>
             <div class="footer-section">
-                <span class="version">{{ $t("版本号") }}：1.0.22061401</span>
+                <span class="version">{{ $t("版本号") }}：1.0.22061402</span>
             </div>
         </div>
         <div class="record-section">
@@ -261,8 +261,12 @@ export default defineComponent({
 
         .title {
             color: #fff;
-            font-size: 25px;
-            font-weight: 500;
+            font-size: 40px;
+            font-weight: 550;
+            text-shadow: 0px 0px 0 #fff, -1px -1px 0 #fff, -1px -1px 0 #fff,
+                -2px -2px 0 #fff, -2px -2px 0 #fff,
+                -4px -2px 2px #a4a4a4,
+                -4px -2px 2px #a4a4a4;
         }
 
         .desc {
