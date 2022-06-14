@@ -5,7 +5,7 @@
             <p class="desc">
                 本项目集成了Vue3、qiankun（微前端）、国际化、动态路由等技术，完全开源免费帮您快速搭建Saas管理后台！
             </p>
-            <img class="login-bg" src="../../assets/png/login_bg.jpg" alt="">
+            <img class="login-bg" src="../../assets/png/login_bg.png" alt="">
         </div>
         <div class="login-section">
             <el-tabs v-model="currentTab" class="demo-tabs" @tab-click="tabChangeHandler">
@@ -274,7 +274,7 @@ export default defineComponent({
 
         .login-bg {
             width: 600px;
-            height: 325px;
+            height: 450px;
             border-radius: 10px;
         }
     }
@@ -296,7 +296,7 @@ export default defineComponent({
         border-radius: 5px;
         position: absolute;
         right: 150px;
-        top: 230px;
+        top: 300px;
 
         .login-btn {
             width: 320px;
