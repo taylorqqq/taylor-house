@@ -1,81 +1,83 @@
 <template>
-  <div class="login-container">
-    <div class="title-section">
-      <p class="title">Vue3-TypeScript-Vite-Admin</p>
-    </div>
-    <div class="login-section">
-      <el-tabs v-model="currentTab" class="demo-tabs" @tab-click="tabChangeHandler">
-        <el-tab-pane :label="$t('普通账号登录')" name="user">
-          <el-form ref="ruleFormRef1" :model="form1" :rules="rule1">
-            <div class="account-section">
-              <div class="input-section">
-                <el-form-item prop="account1">
-                  <el-input v-model="form1.account1" class="w-50 m-2" :placeholder="$t('请输入普通账号')">
-                    <template #prefix>
-                      <el-icon>
-                        <user />
-                      </el-icon>
-                    </template>
-                  </el-input>
-                </el-form-item>
-                <el-form-item prop="password1">
-                  <el-input
-                    type="password" style="margin-top: 20px" v-model="form1.password1"
-                    class="w-50 m-2" :placeholder="$t('请输入密码')">
-                    <template #prefix>
-                      <el-icon>
-                        <connection />
-                      </el-icon>
-                    </template>
-                  </el-input>
-                </el-form-item>
-              </div>
-              <div @click="loginHandler('user', ruleFormRef1)" class="login-btn">
-                {{ $t("登录") }}
-              </div>
+    <div class="login-container">
+        <div class="title-section">
+            <p class="title">Vue3 TypeScript Vite Admin</p>
+            <p class="desc">
+                本项目集成了Vue3、qiankun（微前端）、国际化、动态路由等技术，完全开源免费帮您快速搭建Saas管理后台！
+            </p>
+            <img class="login-bg" src="../../assets/png/login_bg.jpg" alt="">
+        </div>
+        <div class="login-section">
+            <el-tabs v-model="currentTab" class="demo-tabs" @tab-click="tabChangeHandler">
+                <el-tab-pane :label="$t('普通账号登录')" name="user">
+                    <el-form ref="ruleFormRef1" :model="form1" :rules="rule1">
+                        <div class="account-section">
+                            <div class="input-section">
+                                <el-form-item prop="account1">
+                                    <el-input v-model="form1.account1" class="w-50 m-2" :placeholder="$t('请输入普通账号')">
+                                        <template #prefix>
+                                            <el-icon>
+                                                <user />
+                                            </el-icon>
+                                        </template>
+                                    </el-input>
+                                </el-form-item>
+                                <el-form-item prop="password1">
+                                    <el-input type="password" style="margin-top: 20px" v-model="form1.password1"
+                                        class="w-50 m-2" :placeholder="$t('请输入密码')">
+                                        <template #prefix>
+                                            <el-icon>
+                                                <connection />
+                                            </el-icon>
+                                        </template>
+                                    </el-input>
+                                </el-form-item>
+                            </div>
+                            <div @click="loginHandler('user', ruleFormRef1)" class="login-btn">
+                                {{ $t("登录") }}
+                            </div>
+                        </div>
+                    </el-form>
+                </el-tab-pane>
+                <el-tab-pane :label="$t('管理员账号登录')" name="admin">
+                    <el-form ref="ruleFormRef2" :model="form2" :rules="rule2">
+                        <div class="account-section">
+                            <div class="input-section">
+                                <el-form-item prop="account2">
+                                    <el-input v-model="form2.account2" class="w-50 m-2" :placeholder="$t('请输入管理员账号')">
+                                        <template #prefix>
+                                            <el-icon>
+                                                <user />
+                                            </el-icon>
+                                        </template>
+                                    </el-input>
+                                </el-form-item>
+                                <el-form-item prop="password2">
+                                    <el-input type="password" style="margin-top: 20px" v-model="form2.password2"
+                                        class="w-50 m-2" :placeholder="$t('请输入密码')">
+                                        <template #prefix>
+                                            <el-icon>
+                                                <connection />
+                                            </el-icon>
+                                        </template>
+                                    </el-input>
+                                </el-form-item>
+                            </div>
+                            <div @click="loginHandler('adminer', ruleFormRef2)" class="login-btn">
+                                {{ $t("登录") }}
+                            </div>
+                        </div>
+                    </el-form>
+                </el-tab-pane>
+            </el-tabs>
+            <div class="footer-section">
+                <span class="version">{{ $t("版本号") }}：1.0.22061401</span>
             </div>
-          </el-form>
-        </el-tab-pane>
-        <el-tab-pane :label="$t('管理员账号登录')" name="admin">
-          <el-form ref="ruleFormRef2" :model="form2" :rules="rule2">
-            <div class="account-section">
-              <div class="input-section">
-                <el-form-item prop="account2">
-                  <el-input v-model="form2.account2" class="w-50 m-2" :placeholder="$t('请输入管理员账号')">
-                    <template #prefix>
-                      <el-icon>
-                        <user />
-                      </el-icon>
-                    </template>
-                  </el-input>
-                </el-form-item>
-                <el-form-item prop="password2">
-                  <el-input
-                    type="password" style="margin-top: 20px" v-model="form2.password2"
-                    class="w-50 m-2" :placeholder="$t('请输入密码')">
-                    <template #prefix>
-                      <el-icon>
-                        <connection />
-                      </el-icon>
-                    </template>
-                  </el-input>
-                </el-form-item>
-              </div>
-              <div @click="loginHandler('adminer', ruleFormRef2)" class="login-btn">
-                {{ $t("登录") }}
-              </div>
-            </div>
-          </el-form>
-        </el-tab-pane>
-      </el-tabs>
-      <div class="footer-section">
-        <span class="version">{{ $t("版本号") }}：1.0.22061301</span>
-      </div>
+        </div>
+        <div class="record-section">
+            <span class="record">鄂ICP备2022008464号</span>
+        </div>
     </div>
-    <div class="record-section">
-      <span class="record">鄂ICP备2022008464号-1</span>
-    </div>
-  </div>
 </template>
 
 <script lang="ts">
@@ -172,7 +174,6 @@ export default defineComponent({
 
 <style lang="scss">
 .login-container {
-    text-align: center;
     position: relative;
     height: 100%;
     width: 100%;
@@ -246,21 +247,35 @@ export default defineComponent({
         padding: 5px 0;
 
         .record {
-            color: #fff;
+            color: #e1ebec;
             bottom: 0;
             left: 0;
             right: 0;
-            font-size: 12px;
+            font-size: 14px;
         }
     }
 
     .title-section {
-        margin-top: 150px;
+        margin-top: 100px;
+        padding-left: 200px;
 
         .title {
             color: #fff;
-            font-size: 35px;
+            font-size: 25px;
             font-weight: 500;
+        }
+
+        .desc {
+            color: #e1ebec;
+            font-size: 16px;
+            line-height: 30px;
+            width: 600px;
+        }
+
+        .login-bg {
+            width: 600px;
+            height: 325px;
+            border-radius: 10px;
         }
     }
 
@@ -278,9 +293,10 @@ export default defineComponent({
         width: 500px;
         padding-bottom: 20px;
         background-color: #fff;
-        border-radius: 20px;
-        margin: 0 auto;
-        margin-top: 10px;
+        border-radius: 5px;
+        position: absolute;
+        right: 150px;
+        top: 230px;
 
         .login-btn {
             width: 320px;
@@ -288,7 +304,7 @@ export default defineComponent({
             line-height: 40px;
             color: #fff;
             text-align: center;
-            border-radius: 20px;
+            border-radius: 5px;
             background-color: #409eff;
             margin: 0 auto;
             font-size: 16px;
