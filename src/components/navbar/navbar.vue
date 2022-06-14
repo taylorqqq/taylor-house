@@ -17,7 +17,15 @@
       </div>
       <div class="tool-section">
         <div class="btn-section">
-          <div @click="fullScreenHandler" class="btn">
+          <div @click="btnHandler('gitee')" class="btn">
+            <img class="icon" src="../../assets/png/gitee_icon.png" alt="">
+            <span class="btn-title">gitee</span>
+          </div>
+          <div @click="btnHandler('github')" class="btn">
+            <img class="icon" src="../../assets/png/github_icon.png" alt="">
+            <span class="btn-title">github</span>
+          </div>
+          <div @click="btnHandler('full')" class="btn">
             <el-icon>
               <full-screen color="#1d99e3" />
             </el-icon>
@@ -27,11 +35,13 @@
         </div>
         <div class="user-section">
           <el-dropdown @command="handleCommand">
-            <img class="header-img" src="../../assets/png/logo.png" alt="" />
-            <span class="username">{{ $t("nickName") }}</span>
-            <el-icon>
-              <arrow-down-bold />
-            </el-icon>
+            <div class="user-content">
+              <img class="header-img" src="../../assets/png/logo.png" alt="" />
+              <span class="username">{{ $t("nickName") }}</span>
+              <el-icon>
+                <arrow-down-bold />
+              </el-icon>
+            </div>
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item command="quit">{{
@@ -62,8 +72,18 @@ export default defineComponent({
         let state: any = reactive({
             crumbList: computed(() => store.getters.getCrumbList),
         });
-        let fullScreenHandler = () => {
-            screenfull.isEnabled && screenfull.toggle();
+        const btnHandler = (type: string) => {
+            switch (type) {
+                case "full":
+                     screenfull.isEnabled && screenfull.toggle();
+                    break;
+                case "gitee":
+                    window.open('https://gitee.com/xiaoxiang_reincarnation/vue3-ts-vite-admin', "_blank");
+                    break;
+                case "github":
+                    window.open('https://github.com/dddggg123/vue3-ts-vite-admin', "_blank");
+                    break;
+            }
         };
         const handleCommand = () => {
             window.localStorage.clear();
@@ -75,7 +95,7 @@ export default defineComponent({
         return {
             state,
             handleCommand,
-            fullScreenHandler,
+            btnHandler,
         };
     },
 });
@@ -112,21 +132,26 @@ export default defineComponent({
         justify-content: space-between;
 
         .tool-section {
-            width: 20%;
+            width: 450px;
             display: flex;
 
             .btn-section {
-                width: 50%;
+                width: 350px;
                 display: flex;
                 justify-content: flex-end;
                 align-items: center;
 
                 .btn {
                     display: flex;
-                    justify-content: flex-end;
+                    justify-content: center;
                     align-items: center;
                     cursor: pointer;
-                    margin-right: 20px;
+                    width: calc(100% / 3);
+
+                    .icon {
+                        width: 20px;
+                        height: 20px;
+                    }
 
                     .btn-title {
                         margin-left: 10px;
@@ -143,7 +168,7 @@ export default defineComponent({
             }
 
             .user-section {
-                width: 50%;
+                width: 150px;
                 padding-right: 20px;
                 text-align: right;
 
