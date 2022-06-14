@@ -295,8 +295,8 @@ export default defineComponent({
         background-color: #fff;
         border-radius: 5px;
         position: absolute;
-        right: 150px;
-        top: 300px;
+        right: 250px;
+        top: 250px;
 
         .login-btn {
             width: 320px;
