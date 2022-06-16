@@ -211,7 +211,7 @@ router.afterEach((to: any, from: any, _next: any) => {
 			document.title = to.meta.name;
 		}
 	} catch (err) {}
-	const arr = to.meta.hide ? [to, from] : to.matched;
+	const arr = to.meta.hide ? [from, to] : to.matched;
 	let routerList = [] as Array<CrumbObj>;
 	arr.forEach((item: any) => {
 		let obj: CrumbObj = {
@@ -225,7 +225,6 @@ router.afterEach((to: any, from: any, _next: any) => {
 	if (to.meta.hide) {
 		//顶部面包屑
 		store.commit("SET_CRUMB_LIST", routerList);
-		window.sessionStorage.setItem("MY_CRUMB_LIST", JSON.stringify(routerList));
 		//目前左边导航选中的active
 		// store.commit("SET_CURRENT_MENU", to.name);
 	} else {
@@ -234,8 +233,6 @@ router.afterEach((to: any, from: any, _next: any) => {
 		store.commit("SET_CRUMB_LIST", routerList);
 		//目前左边导航选中的active
 		store.commit("SET_CURRENT_MENU", to.name);
-		window.sessionStorage.setItem("MY_CRUMB_LIST", JSON.stringify(routerList));
-		window.sessionStorage.setItem("MY_CURRENT_MENU", to.name);
 	}
 });
 

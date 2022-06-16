@@ -55,7 +55,6 @@ const actions = {
     //将两种路由结合生成左边的导航栏
     children = children.concat(routes);
     commit("SET_MENU", children);
-    window.sessionStorage.setItem("MY_MENU", JSON.stringify(children));
     MainContainer.children = children;
     setDefaultRoute([MainContainer]);
     /*  初始路由 */
@@ -64,7 +63,6 @@ const actions = {
     /* 完整的路由表 */
     // @ts-ignore //忽略提示
     commit("SET_PERMISSION", [...initialRoutes, ...DynamicRoutes]);
-    window.sessionStorage.setItem("MY_PERMISSION", JSON.stringify([...initialRoutes, ...DynamicRoutes]));
   },
   /**
    * 清空动态路由和菜单栏
@@ -72,8 +70,6 @@ const actions = {
   async CLEAR_ALL_ROUTES({ commit }: any) {
     commit("SET_MENU", []);
     commit("SET_PERMISSION", []);
-    window.sessionStorage.setItem("MY_MENU", "");
-    window.sessionStorage.setItem("MY_PERMISSION", "");
   },
 };
 export const loadView = (view: String) => {
