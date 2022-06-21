@@ -141,11 +141,10 @@ export default defineComponent({
     justify-content: space-between;
 
     .tool-section {
-      width: 450px;
       display: flex;
 
       .btn-section {
-        width: 350px;
+        min-width: 350px;
         display: flex;
         justify-content: flex-end;
         align-items: center;
