@@ -43,7 +43,7 @@ export default defineConfig({
 				{
 					name: "vue",
 					var: "Vue",
-					path: "https://unpkg.com/vue@next",
+					path: "https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.25/vue.global.prod.min.js",
 				},
 				{
 					name: "vuex",
@@ -53,13 +53,13 @@ export default defineConfig({
 				{
 					name: "vue-router",
 					var: "VueRouter",
-					path: "https://cdnjs.cloudflare.com/ajax/libs/vue-router/4.0.12/vue-router.global.prod.min.js",
+					path: "https://cdnjs.cloudflare.com/ajax/libs/vue-router/4.0.16/vue-router.global.prod.min.js",
 				},
 				{
 					name: "element-plus",
 					var: "ElementPlus",
-					path: `https://unpkg.com/element-plus`,
-					css: "https://unpkg.com/element-plus/dist/index.css",
+					path: `https://cdn.jsdelivr.net/npm/element-plus`,
+					css: "https://cdn.jsdelivr.net/npm/element-plus/dist/index.css",
 				},
 			],
 		}),
