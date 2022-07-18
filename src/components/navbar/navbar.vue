@@ -96,10 +96,16 @@ export default defineComponent({
     };
     const handleCommand = () => {
       window.localStorage.clear();
+      removeCookie("_vtva-token", { path: "/" });
       store.dispatch("CLEAR_ALL_ROUTES");
       setTimeout(() => {
         router.push("/login");
       }, 500);
+    };
+    const removeCookie = (key: string, { path = "/" }) => {
+      const date = "Thu, 01 Jan 1970 00:00:00 GMT";
+      const cookie = `${key}=;path=${path};expires=${date};`;
+      document.cookie = cookie;
     };
     return {
       state,

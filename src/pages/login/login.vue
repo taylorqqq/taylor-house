@@ -103,7 +103,7 @@
         </el-tab-pane>
       </el-tabs>
       <div class="footer-section">
-        <span class="version"> {{ $t("版本号") }}:1.0.22062102 </span>
+        <span class="version"> {{ $t("版本号") }}:1.0.22071801</span>
       </div>
     </div>
     <div class="record-section">
@@ -165,7 +165,10 @@ export default defineComponent({
       form.validate((valid) => {
         if (valid) {
           window.localStorage.setItem("permission", type);
-          window.localStorage.setItem("token", "vue3-ts-vite-admin");
+          setCookie("_vtva-token", "vue3-ts-vite-admin", {
+            time: 1,
+            path: "/",
+          });
           setTimeout(() => {
             emitter.emit("loginStatus", "ok");
             router.push("/home");
@@ -173,6 +176,29 @@ export default defineComponent({
         } else {
         }
       });
+    };
+
+    /**
+     * 这里设置cookie
+     */
+    const setCookie = (
+      key: string,
+      value: string,
+      { time = 1, path = "/" }
+    ) => {
+      let date = new Date();
+      date.setTime(date.getTime() + time * 60 * 60 * 1000);
+      let cookieStr =
+        key +
+        "=" +
+        value +
+        ";" +
+        "path=" +
+        path +
+        ";" +
+        "expires=" +
+        date.toUTCString();
+      document.cookie = cookieStr;
     };
 
     const account = ref("");

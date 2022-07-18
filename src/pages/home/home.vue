@@ -21,9 +21,7 @@
           >
         </p>
         <p class="reamrk-desc">
-          6、本项目的在线预览地址2：<a
-            target="_blank"
-            href="https://xkxk.tech"
+          6、本项目的在线预览地址2：<a target="_blank" href="https://xkxk.tech"
             >https://xkxk.tech</a
           >
         </p>

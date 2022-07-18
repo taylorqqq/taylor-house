@@ -174,11 +174,11 @@ const router = createRouter({
 
 router.beforeEach((to: any, _from: any, next: any) => {
   //未登录执行逻辑
-  if (!window.localStorage.getItem("token") && to.path !== "/login") {
+  if (!getCookies("_vtva-token") && to.path !== "/login") {
     return next({ path: "/login" });
   }
   //已登录执行逻辑
-  if (window.localStorage.getItem("token") && to.path == "/login") {
+  if (getCookies("_vtva-token") && to.path == "/login") {
     return next();
   }
   //重新加载动态路由
@@ -196,6 +196,23 @@ router.beforeEach((to: any, _from: any, next: any) => {
   }
 });
 
+function getCookies(v: string) {
+  const cookies = document.cookie;
+  if (!cookies) return "";
+  const list = cookies.split(";");
+  for (let i = 0; i < list.length; i++) {
+    const getValue = list[i].split("=");
+    for (let j = 0; j < getValue.length; j++) {
+      const key = getValue[0];
+      const value = getValue[1];
+      if (key == v) {
+        return value;
+      }
+    }
+  }
+  return "";
+}
+
 // 这里简化路由对象 只取需要的字段
 type CrumbObj = {
   name: string;
@@ -208,13 +225,13 @@ router.afterEach((to: any, from: any, _next: any) => {
   try {
     //设置标题
     if (to.meta.name) {
-      document.title = to.meta.name;
+      document.title = to.meta.name + "_Vue3 TypeScript Vite Admin";
     }
   } catch (err) {}
   const arr = to.meta.hide ? [from, to] : to.matched;
   let routerList = [] as Array<CrumbObj>;
   arr.forEach((item: any) => {
-    let obj: CrumbObj = {
+    const obj: CrumbObj = {
       name: item.name,
       meta: {
         name: item.meta.name,
