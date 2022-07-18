@@ -36,27 +36,7 @@ export default defineConfig({
 			threshold: 10240,
 			algorithm: "gzip",
 			ext: ".gz",
-		}),
-		// 配置CDN
-		importToCDN({
-			modules: [
-				{
-					name: "vue",
-					var: "Vue",
-					path: "https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.25/vue.global.prod.min.js",
-				},
-				{
-					name: "vuex",
-					var: "Vuex",
-					path: "https://cdnjs.cloudflare.com/ajax/libs/vuex/4.0.2/vuex.global.prod.min.js",
-				},
-				{
-					name: "vue-router",
-					var: "VueRouter",
-					path: "https://cdnjs.cloudflare.com/ajax/libs/vue-router/4.0.16/vue-router.global.prod.min.js",
-				}
-			],
-		}),
+		})
 	],
 	build: {
 		terserOptions: {
