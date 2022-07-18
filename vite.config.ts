@@ -54,13 +54,7 @@ export default defineConfig({
 					name: "vue-router",
 					var: "VueRouter",
 					path: "https://cdnjs.cloudflare.com/ajax/libs/vue-router/4.0.16/vue-router.global.prod.min.js",
-				},
-				{
-					name: "element-plus",
-					var: "ElementPlus",
-					path: `https://cdn.jsdelivr.net/npm/element-plus`,
-					css: "https://cdn.jsdelivr.net/npm/element-plus/dist/index.css",
-				},
+				}
 			],
 		}),
 	],
