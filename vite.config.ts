@@ -1,8 +1,6 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 const path = require("path");
-import importToCDN from "vite-plugin-cdn-import";
-import viteCompression from "vite-plugin-compression";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -28,36 +26,8 @@ export default defineConfig({
 		],
 	},
 	plugins: [
-		vue(),
-		viteCompression({
-			//生成压缩包gz
-			verbose: true,
-			disable: false,
-			threshold: 10240,
-			algorithm: "gzip",
-			ext: ".gz",
-		})
+		vue()
 	],
-	build: {
-		terserOptions: {
-			compress: {
-				//生产环境时移除console
-				drop_console: true,
-				drop_debugger: true,
-			},
-		},
-		// 取消计算文件大小，加快打包速度
-		reportCompressedSize: false,
-		sourcemap: true,
-		// assetsDir: 'static/img',
-		rollupOptions: {
-			output: {
-				chunkFileNames: "js/[name]-[hash].js",
-				entryFileNames: "js/[name]-[hash].js",
-				assetFileNames: "[ext]/[name]-[hash].[ext]",
-			},
-		},
-	},
 	server: {
 		proxy: {
 			"/ws": {
