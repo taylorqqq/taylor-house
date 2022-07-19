@@ -11,17 +11,21 @@ import "@/styles/theme/index.scss";
 import { createI18n } from "vue-i18n";
 import language from "../src/utils/language";
 import "./actions";
+// import config from '@/defaultSettings'
 
 const international = createI18n({
   locale: "zh-CN", //默认显示的语言
   messages: language,
 });
+//
+import WebStorage from "vue-ls";
 // 注册微应用
 // const app = registerMicroApps(apps)
-
 const app = createApp(App);
 for (const name in ElIcons) {
   app.component(name, (ElIcons as any)[name]);
 }
+app.config.globalProperties.$http = () => {};
+app.config.globalProperties.WebStorage = WebStorage;
 
 app.use(store).use(router).use(international).use(ElementPlus).mount("#app");

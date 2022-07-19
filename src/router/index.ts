@@ -175,14 +175,16 @@ const router = createRouter({
 router.beforeEach((to: any, _from: any, next: any) => {
   //未登录执行逻辑
   if (!getCookies("_vtva-token") && to.path !== "/login") {
-    return next({ path: "/login" });
+    // return next({ path: "/login" });
+    return next();
   }
   //已登录执行逻辑
   if (getCookies("_vtva-token") && to.path == "/login") {
     return next();
   }
   //重新加载动态路由
-  if (!store.state.permissionList.length && to.path != "/login") {
+  // if (!store.state.permissionList.length && to.path != "/login") {
+  if (!store.state.permissionList.length) {
     const routerArr: Array<object> =
       window.localStorage.getItem("permission") == "adminer"
         ? permissionList

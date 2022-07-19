@@ -21,9 +21,9 @@
           <el-form ref="ruleFormRef1" :model="form1" :rules="rule1">
             <div class="account-section">
               <div class="input-section">
-                <el-form-item prop="account1">
+                <el-form-item prop="username">
                   <el-input
-                    v-model="form1.account1"
+                    v-model="form1.username"
                     class="w-50 m-2"
                     :placeholder="$t('请输入普通账号')"
                   >
@@ -34,11 +34,11 @@
                     </template>
                   </el-input>
                 </el-form-item>
-                <el-form-item prop="password1">
+                <el-form-item prop="userpwd">
                   <el-input
                     type="password"
                     style="margin-top: 20px"
-                    v-model="form1.password1"
+                    v-model="form1.userpwd"
                     class="w-50 m-2"
                     :placeholder="$t('请输入密码')"
                   >
@@ -59,13 +59,13 @@
             </div>
           </el-form>
         </el-tab-pane>
-        <el-tab-pane :label="$t('管理员账号登录')" name="admin">
+        <el-tab-pane :label="$t('管理员账号登录')" name="manager">
           <el-form ref="ruleFormRef2" :model="form2" :rules="rule2">
             <div class="account-section">
               <div class="input-section">
-                <el-form-item prop="account2">
+                <el-form-item prop="username">
                   <el-input
-                    v-model="form2.account2"
+                    v-model="form2.username"
                     class="w-50 m-2"
                     :placeholder="$t('请输入管理员账号')"
                   >
@@ -76,11 +76,11 @@
                     </template>
                   </el-input>
                 </el-form-item>
-                <el-form-item prop="password2">
+                <el-form-item prop="userpwd">
                   <el-input
                     type="password"
                     style="margin-top: 20px"
-                    v-model="form2.password2"
+                    v-model="form2.userpwd"
                     class="w-50 m-2"
                     :placeholder="$t('请输入密码')"
                   >
@@ -113,14 +113,27 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, Ref, reactive, onMounted } from "vue";
+import {
+  defineComponent,
+  ref,
+  Ref,
+  reactive,
+  onMounted,
+  getCurrentInstance,
+} from "vue";
+// import Vue from "vue";
 import type { TabsPaneContext } from "element-plus";
 import { useRouter, useRoute } from "vue-router";
 import type { FormInstance } from "element-plus";
 import emitter from "@/utils/bus";
+import { ElNotification } from "element-plus";
+import { userLogin } from "@/api/user/api";
 
 export default defineComponent({
   setup() {
+    // const { ctx } = getCurrentInstance(); //获取上下文实例，ctx=vue2的this
+    const { proxy } = getCurrentInstance() as any; // 使用proxy代替ctx,因为ctx只在开发环境有效
+    const WebStorage = proxy.WebStorage;
     const ruleFormRef1 = ref<FormInstance>();
     const ruleFormRef2 = ref<FormInstance>();
     const accountRule = (rule: any, value: any, callback: any) => {
@@ -138,20 +151,20 @@ export default defineComponent({
       }
     };
     const form1 = reactive({
-      account1: "user",
-      password1: "12345678",
+      username: "user",
+      userpwd: "123456",
     });
     const rule1 = reactive({
-      account1: [{ validator: accountRule, trigger: "blur", require: true }],
-      password1: [{ validator: passwordRule, trigger: "blur", require: true }],
+      username: [{ validator: accountRule, trigger: "blur", require: true }],
+      userpwd: [{ validator: passwordRule, trigger: "blur", require: true }],
     });
     const form2 = reactive({
-      account2: "admin",
-      password2: "12345678",
+      username: "manager",
+      userpwd: "123456",
     });
     const rule2 = reactive({
-      account2: [{ validator: accountRule, trigger: "blur", require: true }],
-      password2: [{ validator: passwordRule, trigger: "blur", require: true }],
+      username: [{ validator: accountRule, trigger: "blur", require: true }],
+      userpwd: [{ validator: passwordRule, trigger: "blur", require: true }],
     });
 
     const currentTab: Ref<string> = ref("user");
@@ -161,18 +174,31 @@ export default defineComponent({
     const route = useRoute();
 
     const loginHandler = (type: string, form: FormInstance | undefined) => {
+      let params = {};
+      if (currentTab.value === "user") {
+        params = form1;
+      } else {
+        params = form2;
+      }
       if (!form) return;
       form.validate((valid) => {
         if (valid) {
-          window.localStorage.setItem("permission", type);
-          setCookie("_vtva-token", "vue3-ts-vite-admin", {
-            time: 1,
-            path: "/",
+          userLogin(params).then((res: any) => {
+            if (res.code === 200) {
+              console.log(WebStorage);
+              WebStorage.set("permission", type, 60 * 60 * 24 * 7);
+              WebStorage.set("token", res.data.token, 60 * 60 * 24 * 7);
+              setTimeout(() => {
+                emitter.emit("loginStatus", res);
+                router.push("/home");
+              }, 500);
+            } else {
+              ElNotification.error({
+                title: "登录失败",
+                message: res.msg,
+              });
+            }
           });
-          setTimeout(() => {
-            emitter.emit("loginStatus", "ok");
-            router.push("/home");
-          }, 500);
         } else {
         }
       });

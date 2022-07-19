@@ -47,7 +47,7 @@
             </div>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item command="quit">{{
+                <el-dropdown-item command="quit" @click="handleCommand">{{
                   $t("signOut")
                 }}</el-dropdown-item>
               </el-dropdown-menu>

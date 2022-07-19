@@ -73,17 +73,17 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, onBeforeMount } from "vue";
-import { ElMessage } from "element-plus";
+import { ElNotification } from "element-plus";
 import emitter from "@/utils/bus";
 
 export default defineComponent({
   setup() {
     onMounted(() => {
       emitter.on("loginStatus", (res: any) => {
-        if (res === "ok") {
-          ElMessage({
-            message: "登录成功",
-            type: "success",
+        if (res.code === 200) {
+          ElNotification.success({
+            title: "登录成功",
+            message: `欢迎回来！${res.info.username}`,
           });
         }
       });
