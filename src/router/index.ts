@@ -98,6 +98,26 @@ export const DynamicRoutes = [
         ],
       },
       {
+        path: "system",
+        name: "system",
+        component: () => import("@/pages/system/system.vue"),
+        meta: {
+          name: "系统设置",
+          icon: "grid",
+        },
+        children: [
+          {
+            path: "function",
+            name: "function",
+            component: () => import("@/pages/system/function.vue"),
+            meta: {
+              name: "功能设置",
+              icon: "TopLeft",
+            },
+          },
+        ],
+      },
+      {
         path: "map",
         name: "map",
         component: () => import("@/pages/map/map.vue"),
@@ -185,11 +205,13 @@ router.beforeEach((to: any, _from: any, next: any) => {
   //重新加载动态路由
   // if (!store.state.permissionList.length && to.path != "/login") {
   if (!store.state.permissionList.length) {
-    const routerArr: Array<object> =
-      window.localStorage.getItem("permission") == "adminer"
-        ? permissionList
-        : [];
+    const routerArr: Array<object> = permissionList;
+    // const routerArr: Array<object> =
+    //   window.localStorage.getItem("permission") == "adminer"
+    //     ? permissionList
+    //     : [];
     // router.removeRoute('router');
+    console.log(routerArr)
     return store.dispatch("FETCH_PERMISSION", routerArr).then(() => {
       next({ path: "/home" });
     });

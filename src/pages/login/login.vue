@@ -1,9 +1,10 @@
 <template>
   <div class="login-container">
     <div class="title-section">
-      <p class="title">Vue3 TypeScript Vite Admin</p>
+      <p class="title"></p>
+      <!-- <p class="title">Vue3 TypeScript Vite Admin</p> -->
       <p class="desc">
-        本项目集成了Vue3、qiankun（微前端）、国际化、动态路由等技术，完全开源免费帮您快速搭建Saas管理后台！
+        <!-- 本项目集成了Vue3、qiankun（微前端）、国际化、动态路由等技术，完全开源免费帮您快速搭建Saas管理后台！ -->
       </p>
       <img
         class="login-bg"
@@ -17,7 +18,7 @@
         class="demo-tabs"
         @tab-click="tabChangeHandler"
       >
-        <el-tab-pane :label="$t('普通账号登录')" name="user">
+        <el-tab-pane :label="$t('账号注册')" name="register">
           <el-form ref="ruleFormRef1" :model="form1" :rules="rule1">
             <div class="account-section">
               <div class="input-section">
@@ -25,7 +26,7 @@
                   <el-input
                     v-model="form1.username"
                     class="w-50 m-2"
-                    :placeholder="$t('请输入普通账号')"
+                    :placeholder="$t('请输入账号')"
                   >
                     <template #prefix>
                       <el-icon>
@@ -51,15 +52,15 @@
                 </el-form-item>
               </div>
               <div
-                @click="loginHandler('user', ruleFormRef1)"
+                @click="loginHandler('register', ruleFormRef1)"
                 class="login-btn"
               >
-                {{ $t("登录") }}
+                {{ $t("注册") }}
               </div>
             </div>
           </el-form>
         </el-tab-pane>
-        <el-tab-pane :label="$t('管理员账号登录')" name="manager">
+        <el-tab-pane :label="$t('账号登录')" name="login">
           <el-form ref="ruleFormRef2" :model="form2" :rules="rule2">
             <div class="account-section">
               <div class="input-section">
@@ -67,7 +68,7 @@
                   <el-input
                     v-model="form2.username"
                     class="w-50 m-2"
-                    :placeholder="$t('请输入管理员账号')"
+                    :placeholder="$t('请输入账号')"
                   >
                     <template #prefix>
                       <el-icon>
@@ -93,7 +94,7 @@
                 </el-form-item>
               </div>
               <div
-                @click="loginHandler('adminer', ruleFormRef2)"
+                @click="loginHandler('login', ruleFormRef2)"
                 class="login-btn"
               >
                 {{ $t("登录") }}
@@ -103,11 +104,12 @@
         </el-tab-pane>
       </el-tabs>
       <div class="footer-section">
-        <span class="version"> {{ $t("版本号") }}:1.0.22071805</span>
+        <!-- <span class="version"> {{ $t("版本号") }}:1.0.22071805</span> -->
       </div>
     </div>
     <div class="record-section">
-      <span class="record">鄂ICP备2022008464号</span>
+      <!-- <span class="record">鄂ICP备2022008464号</span> -->
+      <span class="record"></span>
     </div>
   </div>
 </template>
@@ -127,13 +129,17 @@ import { useRouter, useRoute } from "vue-router";
 import type { FormInstance } from "element-plus";
 import emitter from "@/utils/bus";
 import { ElNotification } from "element-plus";
-import { userLogin } from "@/api/user/api";
+import { userRegister, userLogin, userList } from "@/api/user/api";
+import { addMenu, getmenuList } from "@/api/menu/api";
+import { useStore } from "vuex";
 
 export default defineComponent({
   setup() {
     // const { ctx } = getCurrentInstance(); //获取上下文实例，ctx=vue2的this
     const { proxy } = getCurrentInstance() as any; // 使用proxy代替ctx,因为ctx只在开发环境有效
-    const WebStorage = proxy.WebStorage;
+    console.log(proxy);
+    const store = useStore();
+    // const WebStorage = proxy.WebStorage;
     const ruleFormRef1 = ref<FormInstance>();
     const ruleFormRef2 = ref<FormInstance>();
     const accountRule = (rule: any, value: any, callback: any) => {
@@ -151,8 +157,9 @@ export default defineComponent({
       }
     };
     const form1 = reactive({
-      username: "user",
-      userpwd: "123456",
+      username: "",
+      userpwd: "",
+      usertype: 3,
     });
     const rule1 = reactive({
       username: [{ validator: accountRule, trigger: "blur", require: true }],
@@ -167,39 +174,98 @@ export default defineComponent({
       userpwd: [{ validator: passwordRule, trigger: "blur", require: true }],
     });
 
-    const currentTab: Ref<string> = ref("user");
+    const currentTab: Ref<string> = ref("register");
     const tabChangeHandler = (_tab: TabsPaneContext, _event: Event) => {};
 
     const router = useRouter();
     const route = useRoute();
 
     const loginHandler = (type: string, form: FormInstance | undefined) => {
-      let params = {};
-      if (currentTab.value === "user") {
-        params = form1;
-      } else {
-        params = form2;
-      }
       if (!form) return;
       form.validate((valid) => {
         if (valid) {
-          userLogin(params).then((res: any) => {
-            if (res.code === 200) {
-              console.log(WebStorage);
-              WebStorage.set("permission", type, 60 * 60 * 24 * 7);
-              WebStorage.set("token", res.data.token, 60 * 60 * 24 * 7);
-              setTimeout(() => {
-                emitter.emit("loginStatus", res);
-                router.push("/home");
-              }, 500);
-            } else {
-              ElNotification.error({
-                title: "登录失败",
-                message: res.msg,
-              });
-            }
-          });
-        } else {
+          if (type == "register") {
+            userRegister(form1).then((res: any) => {
+              if (res.code == 200) {
+                ElNotification.success({
+                  title: "提示",
+                  message: "注册成功",
+                });
+                currentTab.value = "login";
+              } else {
+                ElNotification.error({
+                  title: "提示",
+                  message: res.msg,
+                });
+              }
+            });
+          } else {
+            userLogin(form2).then((res: any) => {
+              if (res.code == 200) {
+                const loginInfo = res;
+                localStorage.setItem("token", res.data.token);
+                localStorage.setItem("permission", type);
+                localStorage.setItem("info", JSON.stringify(res.data.info));
+                getmenuList({}).then((res: any) => {
+                  if (res.code == 200) {
+                    store.commit('SET_PERMISSION', res.data);
+                    emitter.emit("loginStatus", loginInfo);
+                    router.push("/home");
+                  } else {
+                    ElNotification.error({
+                      title: "提示",
+                      message: res.msg,
+                    });
+                  }
+                });
+                // addMenu({
+                //   component: "/exhibition",
+                //   deleteFlag: "0",
+                //   enabled: true,
+                //   icon: "sliders",
+                //   name: "数据大屏",
+                //   number: "00098",
+                //   parentNumber: "0",
+                //   pushBtn: "",
+                //   sort: "001",
+                //   state: null,
+                //   type: null,
+                //   url: "/exhibition",
+                // }).then((res: any) => {
+                //   if (res.code == 200) {
+                //     emitter.emit("loginStatus", loginInfo);
+                //     router.push("/home");
+                //     ElNotification.success({
+                //       title: "提示",
+                //       message: res.msg,
+                //     });
+                //   } else {
+                //     ElNotification.error({
+                //       title: "提示",
+                //       message: res.msg,
+                //     });
+                //   }
+                // });
+                // emitter.emit("userList", res.data);
+                // component,
+                // deleteFlag,
+                // enabled,
+                // icon,
+                // name,
+                // number,
+                // parentNumber,
+                // pushBtn,
+                // sort,
+                // state,
+                // type,
+              } else {
+                ElNotification.error({
+                  title: "登录失败",
+                  message: res.msg,
+                });
+              }
+            });
+          }
         }
       });
     };
@@ -358,6 +424,8 @@ export default defineComponent({
     padding-left: 200px;
 
     .title {
+      height: 60px;
+      line-height: 60px;
       color: #fff;
       font-size: 40px;
       font-weight: 550;

@@ -96,7 +96,6 @@ export default defineComponent({
     };
     const handleCommand = () => {
       window.localStorage.clear();
-      removeCookie("_vtva-token", { path: "/" });
       store.dispatch("CLEAR_ALL_ROUTES");
       setTimeout(() => {
         router.push("/login");

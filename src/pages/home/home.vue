@@ -80,10 +80,11 @@ export default defineComponent({
   setup() {
     onMounted(() => {
       emitter.on("loginStatus", (res: any) => {
-        if (res.code === 200) {
+        console.log(res);
+        if (res.code == 200) {
           ElNotification.success({
             title: "登录成功",
-            message: `欢迎回来！${res.info.username}`,
+            message: `欢迎回来！${res.data.username}`,
           });
         }
       });

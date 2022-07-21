@@ -24,7 +24,7 @@ export default createStore({
   plugins: [
     createPersistedState({
       // 默认存储在localStorage 现改为sessionStorage
-      storage: window.sessionStorage,
+      storage: window.localStorage,
       // 本地存储数据的键名
       key: "MY_VUEX",
     }),
